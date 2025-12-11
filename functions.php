@@ -26,12 +26,22 @@ function clach_setup() {
 add_action( 'after_setup_theme', 'clach_setup' );
 
 /**
- * Registro de Widgets (Sidebars del Footer)
- * Define 3 áreas de widgets para el pie de página.
+ * Registro de Widgets (Sidebars)
  */
 function clach_widgets_init() {
-    $footer_widgets_count = 3;
+    // 1. Zona Home (NUEVA)
+    register_sidebar(array(
+        'name'          => esc_html__('Widgets Inicio', 'clach'),
+        'id'            => 'home-widgets',
+        'description'   => esc_html__('Área principal para widgets en la portada (debajo de las tarjetas).', 'clach'),
+        'before_widget' => '<div id="%1$s" class="clach-widget home-widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h2 class="widget-title">',
+        'after_title'   => '</h2>',
+    ));
 
+    // 2. Zonas Footer (Existentes)
+    $footer_widgets_count = 3;
     for ($i = 1; $i <= $footer_widgets_count; $i++) {
         register_sidebar(array(
             'name'          => esc_html__("Footer Widget $i", 'clach'),
@@ -61,6 +71,7 @@ function clach_scripts() {
     wp_enqueue_style( 'clach-hero', $uri . '/assets/css/modules/hero.css', array('clach-global'), $theme_version );
     wp_enqueue_style( 'clach-cards', $uri . '/assets/css/modules/cards.css', array('clach-global'), $theme_version );
 
+    wp_enqueue_style( 'clach-home-widgets', $uri . '/assets/css/modules/home-widgets.css', array('clach-global'), $theme_version );
     // [NUEVO] Estilos del Botón Top
     wp_enqueue_style( 'clach-back-to-top', $uri . '/assets/css/modules/back-to-top.css', array('clach-global'), $theme_version );
 
