@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
-    <title><?php wp_title('|', true, 'right'); ?></title>
-    
     <?php wp_head(); ?>
 </head>
 
@@ -41,10 +39,16 @@
                         }
                     ?>
                 </a>
+                
                 <div class="branding-text">
-                    <span class="standard-version">N.H.L.A. 2021 - 3.0</span>
-                    <span class="standard-desc">Norma Halal Latinoamericana</span>
+                    <span class="standard-version">
+                        <?php echo esc_html(get_theme_mod('clach_branding_version', '')); ?>
+                    </span>
+                    <span class="standard-desc">
+                        <?php echo esc_html(get_theme_mod('clach_branding_desc', '')); ?>
+                    </span>
                 </div>
+                
             </div>
 
             <nav id="site-navigation" class="main-navigation">
@@ -53,7 +57,7 @@
                     'theme_location' => 'menu-1',
                     'menu_id'        => 'primary-menu',
                     'container'      => false,
-                    'menu_class'     => 'nav-menu gov-style', // Clase para estilar sin sombras, solo texto
+                    'menu_class'     => 'nav-menu gov-style',
                 ) );
                 ?>
             </nav>
