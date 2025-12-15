@@ -58,33 +58,37 @@ add_action( 'widgets_init', 'clach_widgets_init' );
 
 /**
  * Carga de Scripts y Estilos
+ * Se actualiza para incluir los estilos de layout de página.
  */
 function clach_scripts() {
     $theme_version = _S_VERSION;
     $uri = get_template_directory_uri();
 
-    // ... (Tus estilos anteriores: vars, global, layout...) ...
     wp_enqueue_style( 'clach-vars', $uri . '/assets/css/base/variables.css', array(), $theme_version );
     wp_enqueue_style( 'clach-global', $uri . '/assets/css/base/global.css', array('clach-vars'), $theme_version );
+    
+    // Layouts
     wp_enqueue_style( 'clach-header', $uri . '/assets/css/layout/header.css', array('clach-global'), $theme_version );
     wp_enqueue_style( 'clach-footer', $uri . '/assets/css/layout/footer.css', array('clach-global'), $theme_version );
+    wp_enqueue_style( 'clach-page', $uri . '/assets/css/layout/page.css', array('clach-global'), $theme_version );
+
+    // Módulos
     wp_enqueue_style( 'clach-hero', $uri . '/assets/css/modules/hero.css', array('clach-global'), $theme_version );
     wp_enqueue_style( 'clach-cards', $uri . '/assets/css/modules/cards.css', array('clach-global'), $theme_version );
-
     wp_enqueue_style( 'clach-home-widgets', $uri . '/assets/css/modules/home-widgets.css', array('clach-global'), $theme_version );
-    // [NUEVO] Estilos del Botón Top
     wp_enqueue_style( 'clach-back-to-top', $uri . '/assets/css/modules/back-to-top.css', array('clach-global'), $theme_version );
+    if ( is_404() ) {
+        wp_enqueue_style( 'clach-404', $uri . '/assets/css/modules/error-404.css', array('clach-global'), $theme_version );
+    }
 
-    // [IMPORTANTE] FontAwesome (Necesario para el icono de la flecha)
+    // Librerías Externas
     wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css', array(), '6.5.0' );
 
-    // Estilo Principal
+    // Estilo Principal (Style.css)
     wp_enqueue_style( 'clach-style', get_stylesheet_uri(), array('clach-global'), $theme_version );
 
-    // Scripts
+    // Scripts JS
     wp_enqueue_script( 'clach-search-js', $uri . '/assets/js/search.js', array(), $theme_version, true );
-    
-    // [NUEVO] Script Principal (Main JS)
     wp_enqueue_script( 'clach-main-js', $uri . '/assets/js/main.js', array(), $theme_version, true );
 }
 add_action( 'wp_enqueue_scripts', 'clach_scripts' );
